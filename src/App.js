@@ -23,8 +23,8 @@ function App() {
 
   const columns = [
     { dataField: "_id", text: "Id", sort: true, hidden: true },
-    { dataField: "_id", text: "Customer", sort: true },
     { dataField: "name", text: "Name", sort: true },
+    { dataField: "contact", text: "Contact", sort: true },
     { dataField: "email", text: "Email", sort: true },
     { dataField: "location", text: "Location", sort: true },
   ];
