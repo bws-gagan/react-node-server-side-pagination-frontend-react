@@ -18,13 +18,13 @@ function App() {
   const [searchTable, setSearchTable] = useState("");
   const [activePage, setActivePage] = useState(true);
   const [filterEmail, setFilterEmail] = useState("");
-  const [filterArea, setFilterArea] = useState("");
+  const [filterName, setFilterName] = useState("");
   const [filterLocation, setFilterLocation] = useState("");
 
   const columns = [
     { dataField: "_id", text: "Id", sort: true, hidden: true },
     { dataField: "_id", text: "Customer", sort: true },
-    { dataField: "name", text: "Area", sort: true },
+    { dataField: "name", text: "Name", sort: true },
     { dataField: "email", text: "Email", sort: true },
     { dataField: "location", text: "Location", sort: true },
   ];
@@ -48,12 +48,12 @@ function App() {
     let currentPage = 1;
     let pageSize = sizeOfPage;
     fetchData(currentPage, pageSize, searchTable);
-  });
+  }, [sizeOfPage, searchTable]);
 
   const handleSubmit = async (filters) => {
     console.log(filters);
     await setFilterEmail(filters.email);
-    await setFilterArea(filters.area);
+    await setFilterName(filters.name);
     await setFilterLocation(filters.location);
     await setSearchTable("");
 
@@ -64,7 +64,7 @@ function App() {
       pageSize,
       "",
       filters.email,
-      filters.area,
+      filters.name,
       filters.location
     );
   };
@@ -76,21 +76,18 @@ function App() {
     toggle();
   };
 
-  const fetchData = async (currentPage, pageSize, searchTable, cf, af, lf) => {
-    console.log(af, "affff");
-    console.log(filterArea, "affffffffff");
-
+  const fetchData = async (currentPage, pageSize, searchTable, cf, nf, lf) => {
     let values = {
       page: currentPage,
       size: pageSize,
       search: searchTable ? searchTable : "",
       filterEmail: cf ? cf : "",
-      filterArea: af ? af : "",
+      filterName: nf ? nf : "",
       filterLocation: lf ? lf : "",
     };
     console.log(values);
     let serverData = await axios
-      .post("http://localhost:9000/rdpms/user/alluser", values)
+      .post("http://localhost:9000/paginator/user/alluser", values)
       .then((response) => {
         console.log(response.data);
         let fileResponse = response.data;
@@ -122,7 +119,7 @@ function App() {
       pageSize,
       search,
       filterEmail,
-      filterArea,
+      filterName,
       filterLocation
     );
     setActivePage(true);
@@ -151,7 +148,7 @@ function App() {
                   sizeOfPage,
                   searchTable,
                   filterEmail,
-                  filterArea
+                  filterName
                 )
               }
             >
@@ -239,12 +236,12 @@ function App() {
           <Formik
             initialValues={{
               email: filterEmail,
-              area: filterArea,
+              name: filterName,
               location: filterLocation,
             }}
             validationSchema={Yup.object().shape({
               // customer: Yup.string().required("Customer is required"),
-              // area: Yup.string().required("Area is required"),
+              // name: Yup.string().required("Name is required"),
             })}
             onSubmit={(fields) => {
               handleSubmit(fields);
@@ -266,15 +263,15 @@ function App() {
                 </div>
 
                 <div className="aams-login-loginPassBox">
-                  <label>Area</label>
+                  <label>Name</label>
 
                   <Field
-                    name="area"
+                    name="name"
                     type="text"
-                    placeholder="Area"
+                    placeholder="Name"
                     className={
                       "form-control" +
-                      (errors.area && touched.area ? " is-invalid" : "")
+                      (errors.name && touched.name ? " is-invalid" : "")
                     }
                   />
                 </div>
