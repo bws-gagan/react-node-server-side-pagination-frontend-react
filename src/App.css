@@ -28,6 +28,19 @@
   color: #61dafb;
 }
 
+.page-link:active {
+  border-radius: 50%;
+}
+.page-link {
+  border-radius: 50%;
+
+  border: none;
+}
+
+.page-item {
+  border-radius: 50%;
+  border: none;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
