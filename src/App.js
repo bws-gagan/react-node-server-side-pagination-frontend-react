@@ -52,11 +52,10 @@ function App() {
 
   const handleSubmit = async (filters) => {
     console.log(filters);
-    await setFilterEmail(filters.email);
-    await setFilterName(filters.name);
-    await setFilterLocation(filters.location);
-    await setSearchTable("");
-
+    setFilterEmail(filters.email);
+    setFilterName(filters.name);
+    setFilterLocation(filters.location);
+    setSearchTable("");
     let currentPage = 1;
     let pageSize = sizeOfPage;
     await fetchData(
@@ -87,7 +86,7 @@ function App() {
     };
     console.log(values);
     let serverData = await axios
-      .post("http://localhost:9000/paginator/user/alluser", values)
+      .post("http://127.0.0.1:9000/paginator/user/alluser", values)
       .then((response) => {
         console.log(response.data);
         let fileResponse = response.data;
